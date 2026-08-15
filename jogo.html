@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Desvie!</title>
+
+    <style>
+        body {
+            text-align: center;
+            background: #222;
+            color: white;
+        }
+
+        canvas {
+            background: #111;
+            border: 3px solid white;
+        }
+
+        button {
+            display: block;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Desvie</h1>
+
+    <canvas id="jogo" width="400" height="400"></canvas>
+
+    <button id="botao" onclick="reiniciar()">Jogar novamente</button>
+
+    <script>
+
+        let tela = document.getElementById("jogo");
+        let ctx = tela.getContext("2d");
+
+        let jogador;
+        let inimigo;
+        let tecla = {};
+        let jogando;
+
+        function iniciar() {
+
+            //posicao
+            jogador = {
+                x: 180,
+                y: 350
+            };
+
+            //posicao
+            inimigo = {
+                x: Math.random() * 370,
+                y: 0
+            };
+
+            jogando = true;
+
+            document.getElementById("botao").style.display = "none";
+        }
+
+        document.onkeydown = e => tecla[e.key] = true;
+        document.onkeyup = e => tecla[e.key] = false;
+
+        function jogar() {
+
+            if (!jogando) return;
+
+            if (tecla["ArrowLeft"]) jogador.x -= 5;
+            if (tecla["ArrowRight"]) jogador.x += 5;
+
+            if (jogador.x < 0) jogador.x = 0;
+            if (jogador.x > 370) jogador.x = 370;
+
+            inimigo.y += 6;
+
+            if (inimigo.y > 400) {
+                inimigo.y = 0;
+                inimigo.x = Math.random() * 370;
+            }
+
+            if (
+                jogador.x < inimigo.x + 30 &&
+                jogador.x + 30 > inimigo.x &&
+                jogador.y < inimigo.y + 70 &&
+                jogador.y + 30 > inimigo.y
+            ) {
+
+                jogando = false;
+
+                document.getElementById("botao").style.display = "block";
+            }
+
+            ctx.clearRect(0, 0, 400, 400);
+
+            ctx.fillStyle = "lime";
+            ctx.fillRect(jogador.x, jogador.y, 30, 30);
+
+            ctx.fillStyle = "red";
+            ctx.fillRect(inimigo.x, inimigo.y, 30, 70);
+        }
+
+        function reiniciar() {
+            iniciar();
+        }
+
+        iniciar();
+
+        setInterval(jogar, 10);
+
+    </script>
+
+</body>
+
+</html>
