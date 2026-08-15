@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+    <link rel="stylesheet" href="snake.css">
+</head>
+
+<body>
+
+    <div id="menu">
+        <h1>SNAKE</h1>
+        <p>Use as setas para controlar a cobrinha!</p>
+        <button id="btnJogar">JOGAR</button>
+    </div>
+
+    <div id="jogo" class="escondido">
+
+        <div id="informacoes">
+            <span>🏆 Pontos: <strong id="pontuacao">0</strong></span>
+            <span>🥇 Recorde: <strong id="recorde">0</strong></span>
+        </div>
+
+        <canvas id="canvas" width="600" height="600"></canvas>
+
+    </div>
+
+    <div id="gameOver" class="escondido">
+
+        <h2>GAME OVER</h2>
+
+        <p>
+            Pontuação:
+            <strong id="pontuacaoFinal">0</strong>
+        </p>
+
+        <p>
+            Recorde:
+            <strong id="recordeFinal">0</strong>
+        </p>
+
+        <button id="btnNovamente">
+            JOGAR NOVAMENTE
+        </button>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

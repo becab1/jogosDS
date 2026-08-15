@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #080014;
+    color: white;
+    font-family: Arial, sans-serif;
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+#menu,
+#gameOver {
+    text-align: center;
+}
+
+#menu h1 {
+    font-size: 70px;
+
+    color: #00ff88;
+
+    text-shadow:
+        0 0 10px #00ff88,
+        0 0 30px #00ff88,
+        0 0 60px #00ff88;
+
+    margin-bottom: 20px;
+}
+
+#menu p {
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 15px 35px;
+
+    background: transparent;
+
+    border: 2px solid #00ff88;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 10px #00ff88,
+        inset 0 0 10px #00ff88;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #00ff88;
+
+    color: #080014;
+
+    box-shadow:
+        0 0 20px #00ff88,
+        0 0 40px #00ff88;
+}
+
+#jogo {
+    position: relative;
+}
+
+#informacoes {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+
+    font-size: 20px;
+}
+
+#canvas {
+    display: block;
+
+    background: #050509;
+
+    border: 3px solid #00ff88;
+
+    box-shadow:
+        0 0 15px #00ff88,
+        0 0 40px #00ff88;
+}
+
+#gameOver h2 {
+    font-size: 60px;
+
+    color: #ff0055;
+
+    text-shadow:
+        0 0 10px #ff0055,
+        0 0 30px #ff0055,
+        0 0 60px #ff0055;
+
+    margin-bottom: 25px;
+}
+
+#gameOver p {
+    font-size: 22px;
+    margin: 10px;
+}
+
+.escondido {
+    display: none !important;
+}
