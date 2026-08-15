@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0a0a0a;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+}
+
+#caixa-clique {
+  --cor: #1a1a1a;
+
+   width: 320px;
+  height: 320px;
+  font-size: 1.6rem;
+  background-color: var(--cor);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bold;
+  text-align: center;
+  border-radius: 16px;
+  user-select: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+
+  border: 3px solid var(--cor);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+
+ 
+}
+
+
+#caixa-clique::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background-color: var(--cor);
+  filter: blur(40px);
+  opacity: 0.6;
+  z-index: -1;
+  transition: background-color 0.15s ease;
+}
+
+@keyframes pulso {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+#melhor-pontuacao {
+  position: fixed;
+  top: 24px;
+  color: #c44fd6;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #cb4fd6;
+}
+   #glow-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(
+    600px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(247, 0, 255, 0.25),
+    transparent 70%
+  );
+  filter: blur(40px);
+  transition: background 0.05s ease;
+}
+
+</style>
+</head>
+<body>
+    <div id="glow-fundo"></div>
+    <div id="caixa-principal">
+        <div id="melhor-pontuacao"><p>🏆 <span id="tempo"></span></p></div>
+        <div id="caixa-clique"><p>clique Aqui</p></div>
+    </div>
+</body>
+</html>
+<script>
+    const clique = document.getElementById('caixa-clique');
+    const tempo = document.getElementById('tempo');
+    let estado = 'esperando';
+    let inicio = 0;
+    let timeoutId;
+
+    let melhor = localStorage.getItem('melhorTempo');
+    tempo.textContent = melhor ? melhor + ' ms' : '--';
+
+    clique.addEventListener('click', () => {
+    if (estado === 'esperando') {
+
+        estado = 'aguardando';
+        clique.style.setProperty('--cor', '#333');
+        clique.querySelector('p').textContent = 'Clique quando estiver verde...';
+
+        const delay = 1000 + Math.random() * 3000; 
+        timeoutId = setTimeout(() => {
+            estado = 'verde';
+            clique.style.setProperty('--cor', '#00ff88');
+            clique.querySelector('p').textContent = 'CLIQUE!';
+            inicio = performance.now();
+        }, delay);
+
+    } else if (estado === 'aguardando') {
+
+        clearTimeout(timeoutId);
+        estado = 'esperando';
+        clique.style.setProperty('--cor', '#ff3b3b');
+        clique.querySelector('p').textContent = 'cedo demais! clique pra tentar de novo';
+        setTimeout(() => {
+            clique.style.setProperty('--cor', '#1a1a1a');
+            clique.querySelector('p').textContent = 'clique aqui';
+        }, 1000);
+
+    } else if (estado === 'verde') {
+        const reacao = Math.round(performance.now() - inicio);
+        estado = 'esperando';
+        clique.style.setProperty('--cor', '#1a1a1a');
+        clique.querySelector('p').textContent = reacao + ' ms — clique pra jogar de novo';
+
+        if (!melhor || reacao < melhor) {
+            melhor = reacao;
+            localStorage.setItem('melhorTempo', melhor);
+            tempo.textContent = melhor + ' ms';
+        }
+    }
+});
+document.addEventListener('mousemove', (e) => {
+  document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+  document.documentElement.style.setProperty('--my', e.clientY + 'px');
+});
+</script>
